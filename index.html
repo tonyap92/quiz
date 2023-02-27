@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- style -->
+  <link rel="stylesheet" href="style.css">
+
+  <title>Quiz</title>
+</head>
+
+<body>
+
+  <div class="quiz-wrapper">
+    <div class="quiz-container">
+
+      <!-- start -->
+      <div id="quiz-start">
+        <h2>Welcome to <br> QuickQuiz</h2>
+        <img src="img/pict1.png" alt="">
+        <button id="quiz-start__btn">Let’s Go!</button>
+      </div>
+
+      <!-- main-container -->
+      <div id="quiz-container" class="hide">
+        <div class="quiz-container__header">
+          <div id="quiz-container__close">&#x2715</div>
+          <h2 id="quiz-container__indicator"></h2>
+        </div>
+        <div id="quiz-container__progress">
+          <div id="quiz-container__progressbar"></div>
+        </div>
+        <div id="quiz-container__wrap">
+          <div class="quiz-container__start-text">Choose the correct option</div>
+          <h3 id="quiz-container__question"></h3>
+          <div id="quiz-container__options"></div>
+        </div>
+        <button id="quiz-container__btn-next">Next</button>
+      </div>
+
+      <!-- result -->
+      <div id="quiz-result" class="hide">
+        <button id="quiz-result__btn-pass">Start over</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script src="main.js"></script>
+</body>
+
+</html>
