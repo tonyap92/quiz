@@ -67,6 +67,10 @@ function showQuestion() {
     optionsContainer.appendChild(optionEl);
     optionEl.addEventListener("click", handleAnswer);
   }
+
+  if (currentQuestionIndex === questions.length - 1) {
+    nextBtn.textContent = "Result";
+  }
 }
 
 //обрабатываем ответ
