@@ -2,36 +2,36 @@
 const startContainer = document.getElementById("quiz-start");
 const startBtn = document.getElementById("quiz-start__btn");
 
-const quizContainer = document.getElementById("quiz-container");
-const quizClose = document.getElementById("quiz-container__close");
-const progressBar = document.getElementById("quiz-container__progressbar");
-const questionIndicatorEl = document.getElementById(
+const mainContainer = document.getElementById("quiz-container");
+const mainClose = document.getElementById("quiz-container__close");
+const mainProgressBar = document.getElementById("quiz-container__progressbar");
+const mainQuestionIndicator = document.getElementById(
   "quiz-container__indicator"
 );
-const questionEl = document.getElementById("quiz-container__question");
-const optionsContainer = document.getElementById("quiz-container__options");
+const mainQuestion = document.getElementById("quiz-container__question");
+const mainOptions = document.getElementById("quiz-container__options");
 const nextBtn = document.getElementById("quiz-container__btn-next");
 
 const resultContainer = document.getElementById("quiz-result");
-const passAgainBtn = document.getElementById("quiz-result__btn-pass");
+const startOverBtn = document.getElementById("quiz-result__btn-pass");
 
 let currentQuestionIndex = 0;
 let correctCount = 0;
 
-quizContainer.classList.add("hide");
+mainContainer.classList.add("hide");
 resultContainer.classList.add("hide");
 
 // LISTENERS
 startBtn.addEventListener("click", handleStartButtonClick);
 nextBtn.addEventListener("click", handleNextButtonClick);
-passAgainBtn.addEventListener("click", redirectToIndex);
-quizClose.addEventListener("click", redirectToIndex);
+startOverBtn.addEventListener("click", redirectToIndex);
+mainClose.addEventListener("click", redirectToIndex);
 
 // FUNCTIONS
 //обработка нажатие кнопки "Let's go!"
 function handleStartButtonClick() {
   startContainer.classList.add("hide");
-  quizContainer.classList.remove("hide");
+  mainContainer.classList.remove("hide");
   showQuestion();
 }
 
@@ -40,32 +40,35 @@ function showQuestion() {
   const question = questions[currentQuestionIndex];
   console.log("> showQuestion -> question", question);
 
-  questionIndicatorEl.textContent = `${currentQuestionIndex + 1}/${
+  mainQuestionIndicator.textContent = `${currentQuestionIndex + 1}/${
     questions.length
   }`;
-  console.log("> showQuestion ->  questionIndicatorEl", questionIndicatorEl);
-  const progress = (currentQuestionIndex / questions.length) * 100;
-  console.log("> showQuestion -> progress", progress);
-  progressBar.style.width = progress + 20 + "%";
-  console.log("> showQuestion -> progressBar", progressBar);
-  questionEl.textContent = question.question;
+  console.log(
+    "> showQuestion ->  mainQuestionIndicator",
+    mainQuestionIndicator
+  );
+  const mainProgress = (currentQuestionIndex / questions.length) * 100;
+  console.log("> showQuestion -> mainProgress", mainProgress);
+  mainProgressBar.style.width = mainProgress + 20 + "%";
+  console.log("> showQuestion -> mainProgressBar", mainProgressBar);
+  mainQuestion.textContent = question.question;
 
-  optionsContainer.innerHTML = "";
+  mainOptions.innerHTML = "";
 
   for (let option of question.options) {
-    const optionEl = document.createElement("button");
-    optionEl.classList.add("option");
+    const optionButton = document.createElement("button");
+    optionButton.classList.add("option");
 
-    const optionImgEl = document.createElement("img");
-    optionImgEl.src = option.image;
-    optionEl.appendChild(optionImgEl);
+    const optionImg = document.createElement("img");
+    optionImg.src = option.image;
+    optionButton.appendChild(optionImg);
 
-    const optionTextEl = document.createElement("span");
-    optionTextEl.textContent = option.text;
-    optionEl.appendChild(optionTextEl);
+    const optionText = document.createElement("span");
+    optionText.textContent = option.text;
+    optionButton.appendChild(optionText);
 
-    optionsContainer.appendChild(optionEl);
-    optionEl.addEventListener("click", handleAnswer);
+    mainOptions.appendChild(optionButton);
+    optionButton.addEventListener("click", handleAnswer);
   }
 
   if (currentQuestionIndex === questions.length - 1) {
@@ -86,8 +89,8 @@ function handleAnswer(e) {
     correctCount++;
   }
 
-  for (let optionEl of optionsContainer.children) {
-    optionEl.classList.remove("selected");
+  for (let optionButton of mainOptions.children) {
+    optionButton.classList.remove("selected");
   }
 
   selectedOption.classList.add("selected");
@@ -95,7 +98,7 @@ function handleAnswer(e) {
 
 //обработка нажатие кнопки "Next"
 function handleNextButtonClick() {
-  const selectedOption = optionsContainer.querySelector(".selected");
+  const selectedOption = mainOptions.querySelector(".selected");
 
   if (selectedOption) {
     nextBtn.classList.remove("disabled");
@@ -116,30 +119,30 @@ function handleNextButtonClick() {
 
 //изменяем контент отображения на странице результата в зависимости от набранных баллов
 function createResultText() {
-  const resultImgEl = document.createElement("img");
-  resultImgEl.classList.add("quiz-result__img");
-  resultContainer.appendChild(resultImgEl);
+  const resultImg = document.createElement("img");
+  resultImg.classList.add("quiz-result__img");
+  resultContainer.appendChild(resultImg);
 
-  const resultTextEl = document.createElement("p");
-  resultContainer.appendChild(resultTextEl);
+  const resultText = document.createElement("p");
+  resultContainer.appendChild(resultText);
 
   if (correctCount === 0) {
-    resultImgEl.src = "./img/sad.png";
-    resultTextEl.innerHTML = `<span>Try again...  </span>${correctCount} / ${questions.length} answers are correct`;
+    resultImg.src = "./img/sad.png";
+    resultText.innerHTML = `<span>Try again...  </span>${correctCount} / ${questions.length} answers are correct`;
   } else if (correctCount >= 1 && correctCount < 4) {
-    resultImgEl.src = "./img/fun.png";
-    resultTextEl.innerHTML = `<span>Well done..  </span>${correctCount} / ${questions.length} answers are correct`;
+    resultImg.src = "./img/fun.png";
+    resultText.innerHTML = `<span>Well done..  </span>${correctCount} / ${questions.length} answers are correct`;
   } else if (correctCount === 5) {
-    resultImgEl.src = "./img/clapping.png";
-    resultTextEl.innerHTML = `<span>High five!... </span>${correctCount} / ${questions.length} answers are correct`;
+    resultImg.src = "./img/clapping.png";
+    resultText.innerHTML = `<span>High five!... </span>${correctCount} / ${questions.length} answers are correct`;
   }
 
-  resultContainer.appendChild(passAgainBtn);
+  resultContainer.appendChild(startOverBtn);
 }
 
 //показываем результат
 function showResults() {
-  quizContainer.classList.add("hide");
+  mainContainer.classList.add("hide");
   resultContainer.classList.remove("hide");
 
   createResultText();
