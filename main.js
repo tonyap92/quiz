@@ -97,7 +97,7 @@ function handleNextButtonClick() {
     nextBtn.classList.remove("disabled");
   } else {
     nextBtn.classList.add("disabled");
-    alert("Выбери ответ!");
+    alert("Choose the answer!");
     return;
   }
 
